@@ -17,22 +17,36 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Download artifact
+      # x86_64
+      - name: Download x86_64 artifact
+        run: |
+          URL="https://github.com/taku-256/xgraft/releases/download/${TAG}/xgraft-${TAG}-x86_64-apple-darwin.tar.gz"
+          curl -L "$URL" -o x86.tar.gz
+
+      - name: SHA x86_64
+        id: sha_x86
+        run: |
+          echo "sha=$(shasum -a 256 x86.tar.gz | awk '{print $1}')" >> "$GITHUB_OUTPUT"
+
+      # ARM64
+      - name: Download arm64 artifact
         run: |
           URL="https://github.com/taku-256/xgraft/releases/download/${TAG}/xgraft-${TAG}-aarch64-apple-darwin.tar.gz"
-          curl -L "$URL" -o xgraft.tar.gz
+          curl -L "$URL" -o arm.tar.gz
 
-      - name: Compute SHA256
-        id: sha
+      - name: SHA arm64
+        id: sha_arm
         run: |
-          echo "sha=$(shasum -a 256 xgraft.tar.gz | awk '{print $1}')" >> "$GITHUB_OUTPUT"
+          echo "sha=$(shasum -a 256 arm.tar.gz | awk '{print $1}')" >> "$GITHUB_OUTPUT"
 
+      # Formula生成
       - name: Write Formula
-        env:
-          SHA: ${{ steps.sha.outputs.sha }}
         run: |
-          python3 scripts/write_formula.py
+          python3 scripts/write_formula.py \
+            "${{ steps.sha_x86.outputs.sha }}" \
+            "${{ steps.sha_arm.outputs.sha }}"
 
+      # commit
       - name: Commit & Push
         run: |
           git config user.name "github-actions"

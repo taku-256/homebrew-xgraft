@@ -3,8 +3,8 @@ import os
 
 tag = os.environ["TAG"]
 
-sha_arm = os.environ["SHA_ARM"]
-sha_x86 = os.environ["SHA_X86"]
+sha_x86 = os.environ["SHA_X86_64"]
+sha_arm = os.environ["SHA_ARM64"]
 
 content = f'''class Xgraft < Formula
     desc "MPLAB X project tool"
