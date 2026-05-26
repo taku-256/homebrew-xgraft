@@ -4,10 +4,10 @@ class Xgraft < Formula
 
     if Hardware::CPU.arm?
         url "https://github.com/taku-256/xgraft/releases/download/v0.1.0/xgraft-v0.1.0-aarch64-apple-darwin.tar.gz"
-        sha256 "73c934b09e390b1906b3fb6e0c1960d9d0f267ae2669ff206916c078e709011a"
+        sha256 "92951bc547a5cbcc9cb32a7a645872030acfba88846fe9dcee4130c8460023cb"
     else
         url "https://github.com/taku-256/xgraft/releases/download/v0.1.0/xgraft-v0.1.0-x86_64-apple-darwin.tar.gz"
-        sha256 "5ea6988900d2aeb8bcfb3ed4f3678e08c554439f2e818effd63dbb71cbe64f85"
+        sha256 "42d3983c3cffe6db26b6f177e08002770c8bcd6c1e3c362ec34061bf0b3c19a3"
     end
 
     def install
